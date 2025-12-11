@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "compose-virtualjoystick-multiplatform"
 include(":library")
+include(":composeApp")
