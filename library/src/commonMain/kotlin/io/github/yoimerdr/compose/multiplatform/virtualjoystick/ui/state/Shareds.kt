@@ -4,6 +4,8 @@ import androidx.annotation.FloatRange
 import androidx.compose.ui.geometry.Offset
 import io.github.yoimerdr.compose.multiplatform.virtualjoystick.core.control.Direction
 import io.github.yoimerdr.compose.multiplatform.virtualjoystick.core.geometry.SQRT_2
+import io.github.yoimerdr.compose.multiplatform.virtualjoystick.ui.tokens.JoystickDefaults
+import kotlinx.coroutines.delay
 
 /**
  * A listener for joystick move events, receiving a snapshot of the joystick state.
@@ -13,6 +15,7 @@ typealias JoystickMoveListener = (JoystickSnapshot) -> Unit
 
 /**
  * Moves the joystick to the position corresponding to the given direction.
+ * @param direction The direction to move the joystick to
  */
 fun JoystickState.goto(direction: Direction) {
     goto(
@@ -22,6 +25,8 @@ fun JoystickState.goto(direction: Direction) {
 
 /**
  * Calculates the position offset for the given direction and strength.
+ * @param direction The direction to calculate the position for
+ * @param strength The strength/magnitude of the movement
  */
 fun JoystickState.getPosition(
     direction: Direction,
@@ -77,3 +82,106 @@ fun JoystickState.getPosition(
 fun JoystickState.toSnapshot(): JoystickSnapshot {
     return JoystickSnapshot(direction, position, strength, angle)
 }
+
+
+/**
+ * Moves the joystick to the specified position, triggering the move callbacks.
+ *
+ * @param position The target position to move to
+ * @param onMoveStart Callback invoked when the move starts
+ * @param onMoveEnd Callback invoked when the move ends
+ * @param interval Delay in milliseconds between move start and end
+ */
+suspend fun JoystickState.gotoWithReset(
+    position: Offset,
+    onMoveStart: JoystickMoveListener,
+    onMoveEnd: JoystickMoveListener,
+    interval: Long = JoystickDefaults.interval,
+) {
+    goto(position)
+    onMoveStart(toSnapshot())
+    delay(interval)
+    reset()
+    onMoveEnd(toSnapshot())
+}
+
+/**
+ * Moves the joystick to the specified position, triggering the move callbacks.
+ *
+ * @param position The target position to move to
+ * @param onMove Callback invoked for both move start and end
+ * @param interval Delay in milliseconds between move start and end
+ */
+suspend fun JoystickState.gotoWithReset(
+    position: Offset,
+    onMove: JoystickMoveListener,
+    interval: Long = JoystickDefaults.interval,
+) {
+    gotoWithReset(position, onMove, onMove, interval)
+}
+
+/**
+ * Moves the joystick to the specified position, triggering the move callbacks.
+ *
+ * @param direction The direction to move to
+ * @param onMoveStart Callback invoked when the move starts
+ * @param onMoveEnd Callback invoked when the move ends
+ * @param interval Delay in milliseconds between move start and end
+ */
+suspend fun JoystickState.gotoWithReset(
+    direction: Direction,
+    onMoveStart: JoystickMoveListener,
+    onMoveEnd: JoystickMoveListener,
+    interval: Long = JoystickDefaults.interval,
+) = gotoWithReset(
+    getPosition(direction),
+    onMoveStart,
+    onMoveEnd,
+    interval,
+)
+
+/**
+ * Moves the joystick to the position corresponding to the given direction, triggering the move callbacks.
+ *
+ * @param direction The direction to move to
+ * @param onMove Callback invoked for both move start and end
+ * @param interval Delay in milliseconds between move start and end
+ */
+suspend fun JoystickState.gotoWithReset(
+    direction: Direction,
+    onMove: JoystickMoveListener,
+    interval: Long = JoystickDefaults.interval,
+) = gotoWithReset(
+    direction,
+    onMove,
+    onMove,
+    interval,
+)
+
+/**
+ * Moves the joystick to the specified position emitting the move events.
+ *
+ * @param position The target position to move to
+ * @param interval Delay in milliseconds between move start and end
+ */
+suspend fun JoystickEventsHolder.gotoWithReset(
+    position: Offset,
+    interval: Long = JoystickDefaults.interval,
+) {
+    state.goto(position)
+    emitStart()
+    delay(interval)
+    state.reset()
+    emitEnd()
+}
+
+/**
+ * Moves the joystick to the position corresponding to the given direction emitting the move events.
+ *
+ * @param direction The direction to move to
+ * @param interval Delay in milliseconds between move start and end
+ */
+suspend fun JoystickEventsHolder.gotoWithReset(
+    direction: Direction,
+    interval: Long = JoystickDefaults.interval,
+) = gotoWithReset(state.getPosition(direction), interval)
