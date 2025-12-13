@@ -10,7 +10,7 @@ plugins {
     alias(libs.plugins.composeCompiler)
 }
 
-group = "io.github.yoimerdr.compose.multiplatform"
+group = "io.github.yoimerdr.compose"
 version = "1.0.0"
 
 kotlin {

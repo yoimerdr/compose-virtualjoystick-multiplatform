@@ -66,11 +66,11 @@ kotlin {
 }
 
 android {
-    namespace = "com.yoimerdr.compose.multiplatform.virtualjoystick"
+    namespace = "com.yoimerdr.compose.virtualjoystick"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.yoimerdr.compose.multiplataform.virtualjoystick"
+        applicationId = "com.yoimerdr.compose.virtualjoystick"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
