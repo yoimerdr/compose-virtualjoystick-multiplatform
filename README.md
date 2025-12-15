@@ -9,7 +9,7 @@
 ![badge-desktop](http://img.shields.io/badge/platform-desktop-DB413D.svg?style=flat)
 ![badge-desktop](https://img.shields.io/badge/platform-web-59B6EC.svg?style=flat)
 
-![sample-android-application](images/sample_android_app.mp4)
+![sample-android-application](images/sample_android_app.gif)
 
 A customizable virtual joystick library for **Compose Multiplatform** that provides touch-based directional controls with configurable dead zones, multiple direction types, and customizable visual styles.
 
