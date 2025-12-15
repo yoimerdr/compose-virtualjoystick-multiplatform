@@ -71,28 +71,31 @@ mavenPublishing {
     coordinates(group.toString(), "virtualjoystick", version.toString())
 
     pom {
-        name = "My library"
-        description = "A library."
-        inceptionYear = "2024"
-        url = "https://github.com/kotlin/multiplatform-library-template/"
+        name = "Compose Virtual Joystick Multiplatform"
+        description = "A customizable virtual joystick library for Compose Multiplatform supporting Android, iOS, JVM, JS, and WASM platforms. Provides touch-based directional controls with configurable dead zones, multiple direction types, and customizable visual styles."
+        inceptionYear = "2025"
+        url = "https://github.com/yoimerdr/compose-virtualjoystick-multiplatform/"
         licenses {
             license {
-                name = "XXX"
-                url = "YYY"
-                distribution = "ZZZ"
+                name = "The Apache License, Version 2.0"
+                url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "https://www.apache.org/licenses/LICENSE-2.0.txt"
             }
         }
         developers {
             developer {
-                id = "XXX"
-                name = "YYY"
-                url = "ZZZ"
+                id = "yoimerdr"
+                name = "Yoimer Davila"
+                email = "yoraldarez020@gmail.com"
+                organization = ""
+                organizationUrl = ""
+                url = "https://github.com/yoimerdr"
             }
         }
         scm {
-            url = "XXX"
-            connection = "YYY"
-            developerConnection = "ZZZ"
+            url = "https://github.com/yoimerdr/compose-virtualjoystick-multiplatform/"
+            connection = "scm:git:git://github.com/yoimerdr/compose-virtualjoystick-multiplatform.git"
+            developerConnection = "scm:git:ssh://git@github.com/yoimerdr/compose-virtualjoystick-multiplatform.git"
         }
     }
 }
